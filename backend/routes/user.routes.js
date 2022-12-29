@@ -1,9 +1,11 @@
 import express from 'express';
 import multer from 'multer'
 import mongoose from 'mongoose'
-
+import User from '../models/User.js';
 
 const router = express.Router();
+
+
 
 const DIR = './public/';
 
@@ -20,7 +22,7 @@ const storage = multer.diskStorage({
 let upload = multer({
     storage: storage,
     fileFilter: (req, file, cb) => {
-        if (file.mimetype == "image/png" || file.mimetype == "image/jpg" || file.mimetype == "image/jpeg") {
+        if (file.mimetype == "image/png" || file.mimetype == "image/jpg" || file.mimetype == "image/jpeg" || file.mimetype == "image/jfif") {
             cb(null, true);
         } else {
             cb(null, false);
@@ -30,7 +32,7 @@ let upload = multer({
 });
 
 // User model
-import User from '../models/User.js';
+
 
 router.post('/upload-images', upload.array('file', 6), async (req, res, next) => {
     const reqFiles = [];
